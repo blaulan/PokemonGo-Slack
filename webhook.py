@@ -22,13 +22,14 @@ alerts = Alaem_Manager()
 def trigger_alert():
     log.debug('POST request response has been triggered.')
     data = json.loads(request.data.decode('utf-8'))
-    if data['type'] == 'pokemon' :
-        log.debug('POST request is a pokemon.')
-        Thread(target=alerts.trigger_pkmn, args=(data['message']), ).start()
-    elif data['type'] == 'pokestop' :
-        log.debug('Pokestop notifications not yet implimented.')
-    elif data['type'] == 'pokegym' :
-        log.debug('Pokegym notifications not yet implimented.')
+    if data['type'] == 'pokemon':
+        log.debug('POST request is a pokemon ({pokemon_id}).'.format(**data['message']))
+        Thread(target=alerts.trigger_pkmn, args=(data['message'], )).start()
+    elif data['type'] == 'location':
+        log.debug('POST request is a location ({lat},{lon}).'.format(**data['message']))
+        global alerts
+        alerts.lat = data['message']['lat']
+        alerts.lon = data['message']['lon']
 
     return 'OK'
 
