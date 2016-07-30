@@ -4,7 +4,7 @@
 import json
 import logging
 from slacker import Slacker
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import radians, acos, sin, cos
 
 
@@ -15,7 +15,7 @@ class Alaem_Manager:
 
     def __init__(self):
         with open('config.json', 'r') as f:
-            self.config = json.loads(f.read())
+            self.config = json.loads(f.read().decode('utf-8'))
             self.slack = Slack_Alarm(self.config)
             self.groups = self.config['groups']
             self.radius = {k:self.groups[v] for k,v in self.config['pokemon'].items()}
@@ -89,12 +89,12 @@ def pkmn_link(lat, lon):
     return 'https://www.google.com/maps/dir/Current+Location/{}'.format(lat_lon)
 
 
-def pkmn_time(time):
-    s = (time - datetime.now()).total_seconds()
+def pkmn_time(time, off=timedelta(hours=-8)):
+    s = (time - datetime.utcnow()).total_seconds()
     (m, s) = divmod(s, 60)
     (h, m) = divmod(m, 60)
 
-    return time.strftime('%H:%M:%S'), '{:.0f}m {:.0f}s'.format(m, s)
+    return (time+off).strftime('%H:%M:%S'), '{:.0f}m {:.0f}s'.format(m, s)
 
 
 def pkmn_dist(lat1, lon1, lat2, lon2, R=6371008):
