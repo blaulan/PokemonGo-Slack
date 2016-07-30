@@ -72,8 +72,9 @@ class Slack_Alarm:
         log.info('Slack Alarm Intialized.')
         self.client.chat.post_message(
             channel=self.channel,
-            username='PokeAlarm',
-            text='PokeAlarm activated! We will alert this channel about pokemon.'
+            username='PokemonGo-Slack',
+            text='PokemonGo-Slack activated! We will alert this channel about nearby pokemon.',
+            icon_url=self.icon_url.format(id=175).encode('utf-8')
         )
 
     def pokemon_alert(self, pkinfo):
