@@ -65,7 +65,7 @@ class Slack_Alarm:
         self.channel = settings['channel']
         self.icon_url = settings['icon_url']
         self.alert_text = (
-            u'<{link}|A wild *{name}* is {distance:.2f}m away!> ' +
+            u'A wild *{name}* is <{link}|{distance:.2f}m> away! ' +
             u'Available until {disappear_time} ({duration}).'
         )
 
