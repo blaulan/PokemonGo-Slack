@@ -5,6 +5,7 @@ import json
 import logging
 from flask import Flask, request
 from alarm import Alaem_Manager
+from threading import Thread
 
 
 logging.basicConfig(
@@ -23,7 +24,7 @@ def trigger_alert():
     data = json.loads(request.data.decode('utf-8'))
     if data['type'] == 'pokemon' :
         log.debug('POST request is a pokemon.')
-        alerts.trigger_pkmn(data['message'])
+        Thread(target=alerts.trigger_pkmn, args=(data['message']), ).start()
     elif data['type'] == 'pokestop' :
         log.debug('Pokestop notifications not yet implimented.')
     elif data['type'] == 'pokegym' :
