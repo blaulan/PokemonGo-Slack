@@ -45,6 +45,7 @@ class Alaem_Manager:
             'distance': distance
         }
 
+        log.debug(u'{id:03d}-{name}: [{duration}m] [{distance}]'.format(**pkinfo).encode('utf-8'))
         if self.radius[pkinfo['name']] < distance:
             log.debug(u'{name} notification is disabled.'.format(**pkinfo).encode('utf-8'))
         else:

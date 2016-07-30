@@ -38,8 +38,8 @@ if __name__ == '__main__':
     if config['debug']:
         logging.basicConfig(level=logging.DEBUG)
     else :
-        #logging.getLogger('werkzeug').setLevel(logging.ERROR)
-        #logging.getLogger('requests').setLevel(logging.DEBUG)
+        logging.getLogger('werkzeug').setLevel(logging.ERROR)
+        logging.getLogger('requests').setLevel(logging.DEBUG)
         logging.getLogger('alarm').setLevel(logging.INFO)
 
     app.run(debug=config['debug'],host=config['host'], port=config['port'])
