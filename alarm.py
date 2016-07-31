@@ -45,7 +45,7 @@ class Alaem_Manager:
             'distance': distance
         }
 
-        log.debug(u'{id:03d}-{name}: [{duration}] [{distance}m]'.format(**pkinfo).encode('utf-8'))
+        log.debug(u'{id:03d}-{name}: [{duration}] [{distance:.2f}m]'.format(**pkinfo).encode('utf-8'))
         if self.radius[pkinfo['name']] < distance:
             log.debug(u'{name} notification is disabled.'.format(**pkinfo).encode('utf-8'))
         else:
@@ -54,7 +54,7 @@ class Alaem_Manager:
             self.seen[pkmn['encounter_id']] = disappear_time
 
         if len(self.seen) > 10000:
-            now = datetime.now()
+            now = datetime.utcnow()
             self.seen = {k:v for k,v in self.seen.items() if v <= now}
 
 
