@@ -45,7 +45,7 @@ class Alaem_Manager:
             'distance': distance
         }
 
-        log.debug(u'{id:03d}-{name}: [{duration}] [{distance:.2f}m]'.format(**pkinfo).encode('utf-8'))
+        log.debug(u'{id:03d}-{name}: [{disappear_time}] [{distance:.2f}m]'.format(**pkinfo).encode('utf-8'))
         if self.radius[pkinfo['name']] < distance:
             log.debug(u'{name} notification is disabled.'.format(**pkinfo).encode('utf-8'))
         else:
@@ -91,11 +91,12 @@ def pkmn_link(lat, lon):
     return 'https://www.google.com/maps/dir/Current+Location/{}'.format(lat_lon)
 
 
-def pkmn_time(time, off=timedelta(hours=-8)):
+def pkmn_time(time, off=timedelta(hours=0)):
     s = (time - datetime.utcnow()).total_seconds()
     (m, s) = divmod(s, 60)
     (h, m) = divmod(m, 60)
 
+    time = datetime.now() + timedelta(minutes=m, seconds=s)
     return (time+off).strftime('%H:%M:%S'), '{:.0f}m {:.0f}s'.format(m, s)
 
 

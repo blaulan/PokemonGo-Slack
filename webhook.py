@@ -39,9 +39,10 @@ if __name__ == '__main__':
         config = json.loads(f.read())
     if config['debug']:
         logging.getLogger().setLevel(logging.DEBUG)
+        logging.getLogger('requests').setLevel(logging.DEBUG)
         logging.getLogger('alarm').setLevel(logging.DEBUG)
     else :
-        logging.getLogger('requests').setLevel(logging.DEBUG)
+        logging.getLogger('requests').setLevel(logging.INFO)
         logging.getLogger('alarm').setLevel(logging.INFO)
 
     app.run(debug=config['debug'], host=config['host'], port=config['port'])
